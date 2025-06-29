@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://www.amazon.in/');
+  await page.getByLabel('Select the department you').selectOption('search-alias=fashion');
+  await page.getByRole('searchbox', { name: 'Search Amazon.in' }).selectOption('search-alias=fashion');
+  await page.getByRole('searchbox', { name: 'Search Amazon.in' }).press('CapsLock');
+  await page.getByRole('searchbox', { name: 'Search Amazon.in' }).fill('M');
+  await page.getByRole('searchbox', { name: 'Search Amazon.in' }).press('CapsLock');
+  await page.getByRole('searchbox', { name: 'Search Amazon.in' }).fill('Men ');
+  await page.getByRole('button', { name: 'men shirt casual' }).click();
+  await page.locator('#B0CYQ9VND7-amazons-choice-label').click();
+  await page.locator('#a-autoid-5-announce').click();
+  await page.getByRole('button', { name: 'Add to cart' }).click();
+  await page.getByText('Amazon\'s').click();
+  await page.locator('#B0CYQ9VND7-amazons-choice-label').click();
+  await page.locator('#a-autoid-5-announce').click();
+  await page.getByRole('button', { name: 'Add to cart' }).click();
+  await page.getByRole('link', { name: 'Go to Cart' }).click();
+  await page.locator('label').filter({ hasText: 'This order contains a gift' }).locator('i').click();
+  await page.getByRole('button', { name: 'Proceed to Buy Buy Amazon' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('textbox', { name: 'Enter your mobile number or' }).click();
+  await page.getByRole('textbox', { name: 'Enter your mobile number or' }).fill('9876543211');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('button', { name: 'Get an OTP on your phone' }).click();
+  await page.getByRole('textbox', { name: 'Enter OTP' }).click();
+  await page.getByText('Enter OTP').click();
+});
