@@ -1,5 +1,5 @@
 # GitLab CI/CD Pipeline Configuration
-# For Playwright Amazon Advanced Tests - Only PlayStation 5 Search Tests
+# For Playwright Amazon Home Page Launch Test
 
 stages:
   - install
@@ -34,8 +34,8 @@ install:dependencies:
     - develop
     - merge_requests
 
-# Run ONLY PlayStation 5 Search Tests (02 & 03)
-test:playstation:search:
+# Run ONLY Home Page Launch Test (01)
+test:amazon:home:launch:
   stage: test
   image: node:18-alpine
   dependencies:
@@ -45,13 +45,12 @@ test:playstation:search:
     - npx playwright install --with-deps chromium
   script:
     - echo "═══════════════════════════════════════════════════════════"
-    - echo "Running PlayStation 5 Search Test Suite"
-    - echo "Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS"
-    - echo "Test 03: NAVIGATE TO PRODUCT & ADD TO CART"
+    - echo "Running Amazon Home Page Launch Test"
+    - echo "Test 01: Launch Amazon home page"
     - echo "═══════════════════════════════════════════════════════════"
-    - npx playwright test amazon-advanced.test.js --grep "02\\.|03\\." --reporter=html --reporter=junit --reporter=line
+    - npx playwright test amazon-live.test.js --grep "01\." --reporter=html --reporter=junit --reporter=line
     - echo "═══════════════════════════════════════════════════════════"
-    - echo "Test execution completed - Only PlayStation 5 Search Tests"
+    - echo "Test execution completed - Home Page Launch Test"
     - echo "═══════════════════════════════════════════════════════════"
   artifacts:
     when: always
@@ -78,7 +77,7 @@ test:report:
   stage: report
   image: node:18-alpine
   dependencies:
-    - test:playstation:search
+    - test:amazon:home:launch
   script:
     - echo "Test Report Generation"
     - echo "HTML Report location: playwright-report/index.html"
@@ -95,8 +94,8 @@ test:report:
     - merge_requests
   allow_failure: true
 
-# On-demand test run (manual trigger) - PlayStation 5 Search Tests Only
-test:playstation:search:manual:
+# On-demand test run (manual trigger) - Home Page Launch Test Only
+test:amazon:home:launch:manual:
   stage: test
   image: node:18-alpine
   dependencies:
@@ -105,9 +104,9 @@ test:playstation:search:manual:
     - npm ci --prefer-offline --no-audit
     - npx playwright install --with-deps chromium
   script:
-    - echo "Manual PlayStation 5 Search Test Run Triggered"
-    - echo "Running Tests 02 & 03 Only"
-    - npx playwright test amazon-advanced.test.js --grep "02\\.|03\\." --reporter=html --reporter=junit --reporter=line
+    - echo "Manual Home Page Launch Test Run Triggered"
+    - echo "Running Test 01 Only"
+    - npx playwright test amazon-live.test.js --grep "01\." --reporter=html --reporter=junit --reporter=line
   artifacts:
     when: always
     paths:

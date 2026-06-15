@@ -1,4 +1,4 @@
-name: PlayStation 5 Search Test Suite
+name: Amazon Home Page Launch Test
 
 on:
   push:
@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    name: Run PlayStation 5 Search Tests
+    name: Run Amazon Home Page Launch Test
     runs-on: ubuntu-latest
     timeout-minutes: 30
     
@@ -48,16 +48,15 @@ jobs:
           echo "Installing Playwright browsers..."
           npx playwright install --with-deps chromium
       
-      - name: Run PlayStation 5 Search Tests
+      - name: Run Amazon Home Page Launch Test
         run: |
           echo "════════════════════════════════════════════════════════════"
-          echo "Running PlayStation 5 Search Test Suite"
-          echo "Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS"
-          echo "Test 03: NAVIGATE TO PRODUCT & ADD TO CART"
+          echo "Running Amazon Home Page Launch Test"
+          echo "Test 01: Launch Amazon home page"
           echo "════════════════════════════════════════════════════════════"
-          npx playwright test amazon-advanced.test.js --grep "02\.|03\." --reporter=html --reporter=junit
+          npx playwright test amazon-live.test.js --grep "01\." --reporter=html --reporter=junit
           echo "════════════════════════════════════════════════════════════"
-          echo "Test execution completed - Only PlayStation 5 Search Tests"
+          echo "Test execution completed - Home Page Launch Test Only"
           echo "════════════════════════════════════════════════════════════"
       
       - name: Upload Test Results
@@ -81,8 +80,8 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: test-results/junit.xml
-          check_name: PlayStation 5 Search Test Results
-          comment_title: 'PlayStation 5 Search Tests Results'
+          check_name: Amazon Home Page Launch Test Results
+          comment_title: 'Amazon Home Page Launch Test Results'
       
       - name: Comment PR with Test Summary
         if: github.event_name == 'pull_request' && always()
@@ -92,10 +91,9 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            let summary = '## 🎮 PlayStation 5 Search Test Results\n\n';
-            summary += '### Test Cases Running:\n';
-            summary += '- Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS\n';
-            summary += '- Test 03: NAVIGATE TO PRODUCT & ADD TO CART\n\n';
+            let summary = '## � Amazon Home Page Launch Test Results\n\n';
+            summary += '### Test Case Running:\n';
+            summary += '- Test 01: Launch Amazon home page\n\n';
             
             try {
               const junitPath = './test-results/junit.xml';
