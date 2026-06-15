@@ -1,5 +1,5 @@
 # GitLab CI/CD Pipeline Configuration
-# For Playwright Amazon Advanced Tests
+# For Playwright Amazon Advanced Tests - Only PlayStation 5 Search Tests
 
 stages:
   - install
@@ -34,8 +34,8 @@ install:dependencies:
     - develop
     - merge_requests
 
-# Run advanced Amazon tests - Test 6 & 7 only
-test:amazon:advanced:
+# Run ONLY PlayStation 5 Search Tests (02 & 03)
+test:playstation:search:
   stage: test
   image: node:18-alpine
   dependencies:
@@ -44,13 +44,15 @@ test:amazon:advanced:
     - npm ci --prefer-offline --no-audit
     - npx playwright install --with-deps chromium
   script:
-    - echo "═══════════════════════════════════════"
-    - echo "Starting Amazon Test Suite (06 & 07)"
-    - echo "═══════════════════════════════════════"
-    - npx playwright test amazon-advanced.test.js --grep "(06\\.|07\\.)" --headed --reporter=html --reporter=junit --reporter=line
-    - echo "═══════════════════════════════════════"
-    - echo "Test execution completed"
-    - echo "═══════════════════════════════════════"
+    - echo "═══════════════════════════════════════════════════════════"
+    - echo "Running PlayStation 5 Search Test Suite"
+    - echo "Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS"
+    - echo "Test 03: NAVIGATE TO PRODUCT & ADD TO CART"
+    - echo "═══════════════════════════════════════════════════════════"
+    - npx playwright test amazon-advanced.test.js --grep "02\\.|03\\." --reporter=html --reporter=junit --reporter=line
+    - echo "═══════════════════════════════════════════════════════════"
+    - echo "Test execution completed - Only PlayStation 5 Search Tests"
+    - echo "═══════════════════════════════════════════════════════════"
   artifacts:
     when: always
     paths:
@@ -76,7 +78,7 @@ test:report:
   stage: report
   image: node:18-alpine
   dependencies:
-    - test:amazon:advanced
+    - test:playstation:search
   script:
     - echo "Test Report Generation"
     - echo "HTML Report location: playwright-report/index.html"
@@ -93,8 +95,8 @@ test:report:
     - merge_requests
   allow_failure: true
 
-# On-demand test run (manual trigger) - Test 6 & 7 only
-test:amazon:advanced:manual:
+# On-demand test run (manual trigger) - PlayStation 5 Search Tests Only
+test:playstation:search:manual:
   stage: test
   image: node:18-alpine
   dependencies:
@@ -103,8 +105,9 @@ test:amazon:advanced:manual:
     - npm ci --prefer-offline --no-audit
     - npx playwright install --with-deps chromium
   script:
-    - echo "Manual test run triggered - Tests 06 & 07"
-    - npx playwright test amazon-advanced.test.js --grep "(06\\.|07\\.)" --headed --reporter=html --reporter=junit --reporter=line
+    - echo "Manual PlayStation 5 Search Test Run Triggered"
+    - echo "Running Tests 02 & 03 Only"
+    - npx playwright test amazon-advanced.test.js --grep "02\\.|03\\." --reporter=html --reporter=junit --reporter=line
   artifacts:
     when: always
     paths:
@@ -119,3 +122,4 @@ test:amazon:advanced:manual:
     - master
     - develop
     - merge_requests
+

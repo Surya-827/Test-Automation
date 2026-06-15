@@ -1,114 +1,74 @@
-<testsuites id="" name="" tests="8" failures="0" skipped="5" errors="1" time="99.285649">
-<testsuite name="amazon-advanced.test.js" timestamp="2026-06-15T19:22:43.289Z" hostname="" tests="8" failures="0" skipped="5" time="97.12" errors="1">
-<testcase name="Amazon.com Advanced E2E Tests › 01. HOME PAGE LOAD &amp; UI ELEMENTS VERIFICATION" classname="amazon-advanced.test.js" time="19.257">
+<testsuites id="" name="" tests="8" failures="1" skipped="7" errors="0" time="3.941021">
+<testsuite name="amazon-advanced.test.js" timestamp="2026-06-15T19:42:26.157Z" hostname="" tests="8" failures="1" skipped="7" time="2.722" errors="0">
+<testcase name="Amazon.com Advanced E2E Tests › 01. HOME PAGE LOAD &amp; UI ELEMENTS VERIFICATION" classname="amazon-advanced.test.js" time="2.722">
 <system-out>
 <![CDATA[
 █ STEP: Loading Amazon home page
 
-█ → INFO: Navigation Response: 200
+█ → INFO: Navigation Response: 202
   → ASSERT: Current URL: https://www.amazon.com/
 
 █ ✓ SUCCESS: Home page URL verified
-  → ASSERT: Page Title: Amazon.com
+  → ASSERT: Page Title: 
 
-█ ✓ SUCCESS: Page title verified
+█ ✗ ERROR: Home page verification failed: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
 
-█ STEP: Verifying navigation UI elements
+Expected: > [32m0[39m
+Received:   [31m0[39m
 
-█ ⚠ WARNING: Search Box not found - locator.waitFor: Timeout 5000ms exceeded.
-Call log:
-[2m  - waiting for locator('input[placeholder*="Search"]').first() to be visible[22m
+[[ATTACHMENT|amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\test-failed-1.png]]
 
+[[ATTACHMENT|amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\video.webm]]
 
-█ ⚠ WARNING: Amazon Logo not found - locator.waitFor: Timeout 5000ms exceeded.
-Call log:
-[2m  - waiting for locator('a[href*="nav_logo"]').first() to be visible[22m
+[[ATTACHMENT|amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\error-context.md]]
 
-
-█ ⚠ WARNING: Today's Deals not found - locator.waitFor: Timeout 5000ms exceeded.
-Call log:
-[2m  - waiting for locator('span:has-text("Today\'s Deals")').first() to be visible[22m
-
-
-█ ✓ SUCCESS: Best Sellers is visible and enabled
-
-█ ✓ SUCCESS: ✓ Home page load and UI elements verified
+[[ATTACHMENT|amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\trace.zip]]
 ]]>
 </system-out>
-</testcase>
-<testcase name="Amazon.com Advanced E2E Tests › 02. SEARCH FOR PRODUCT &amp; VERIFY RESULTS" classname="amazon-advanced.test.js" time="6.792">
-<system-out>
-<![CDATA[
-█ STEP: Searching for: "PlayStation 5 Console"
+<failure message="expect(received).toBeGreaterThan(expected)" type="expect.toBeGreaterThan">
+<![CDATA[  amazon-advanced.test.js:52:3 › Amazon.com Advanced E2E Tests › 01. HOME PAGE LOAD & UI ELEMENTS VERIFICATION 
 
-█ ✓ SUCCESS: Amazon home page loaded
+    Error: expect(received).toBeGreaterThan(expected)
 
-█ → INFO: Search box found and visible
-  → ASSERT: Entered search term: "PlayStation 5 Console"
+    Expected: > 0
+    Received:   0
 
-█ → INFO: Search submitted
-  → ASSERT: Search results URL: https://www.amazon.com/s?k=PlayStation+5+Console&ref=nb_sb_noss
+      67 |       const title = await page.title();
+      68 |       log.assert(`Page Title: ${title}`);
+    > 69 |       expect(title.length).toBeGreaterThan(0);
+         |                            ^
+      70 |       log.success('Page title verified');
+      71 |
+      72 |       // Wait for main content
+        at C:\Playwright Automation\Amazon\amazon-playwright-test\src\tests\amazon-advanced.test.js:69:28
 
-█ ✓ SUCCESS: Search results page loaded
-  → ASSERT: Found 16 search results
-
-█ ✓ SUCCESS: Search results verified - 16 items found
-
-█ ✓ SUCCESS: Relevant search results confirmed
-]]>
-</system-out>
-</testcase>
-<testcase name="Amazon.com Advanced E2E Tests › 03. NAVIGATE TO PRODUCT &amp; ADD TO CART" classname="amazon-advanced.test.js" time="71.071">
-<system-out>
-<![CDATA[
-█ STEP: Searching for product: "Laptop"
-
-█ ✓ SUCCESS: Search completed
-
-█ ✗ ERROR: Product and cart test failed: locator.textContent: Target page, context or browser has been closed
-Call log:
-[2m  - waiting for locator('[data-component-type="s-search-result"]').first().locator('h2 a')[22m
-
-
-[[ATTACHMENT|amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\video.webm]]
-
-[[ATTACHMENT|amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\error-context.md]]
-
-[[ATTACHMENT|amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\trace.zip]]
-]]>
-</system-out>
-<error message="locator.textContent: Target page, context or browser has been closed" type="Error">
-<![CDATA[  amazon-advanced.test.js:164:3 › Amazon.com Advanced E2E Tests › 03. NAVIGATE TO PRODUCT & ADD TO CART 
-
-    Error: locator.textContent: Target page, context or browser has been closed
-    Call log:
-      - waiting for locator('[data-component-type="s-search-result"]').first().locator('h2 a')
-
-
-      180 |       
-      181 |       // Get product title before clicking
-    > 182 |       const productTitle = await firstProduct.locator('h2 a').textContent();
-          |                                                               ^
-      183 |       log.assert(`First product title: ${productTitle?.trim().substring(0, 80)}...`);
-      184 |
-      185 |       // Click on product
-        at C:\Playwright Automation\Amazon\amazon-playwright-test\src\tests\amazon-advanced.test.js:182:63
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ..\..\test-results\amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\video.webm
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\test-failed-1.png
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    Error Context: ..\..\test-results\amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\error-context.md
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\..\test-results\amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\trace.zip
+    Error Context: ..\..\test-results\amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\trace.zip
     Usage:
 
-        npx playwright show-trace ..\..\test-results\amazon-advanced-Amazon-com-bc410-GATE-TO-PRODUCT-ADD-TO-CART\trace.zip
+        npx playwright show-trace ..\..\test-results\amazon-advanced-Amazon-com-c4737-AD-UI-ELEMENTS-VERIFICATION\trace.zip
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 ]]>
-</error>
+</failure>
+</testcase>
+<testcase name="Amazon.com Advanced E2E Tests › 02. SEARCH FOR PRODUCT &amp; VERIFY RESULTS" classname="amazon-advanced.test.js">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Amazon.com Advanced E2E Tests › 03. NAVIGATE TO PRODUCT &amp; ADD TO CART" classname="amazon-advanced.test.js">
+<skipped>
+</skipped>
 </testcase>
 <testcase name="Amazon.com Advanced E2E Tests › 04. NAVIGATE TO SHOPPING CART" classname="amazon-advanced.test.js">
 <skipped>

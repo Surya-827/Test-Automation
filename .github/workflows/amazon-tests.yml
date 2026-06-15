@@ -1,4 +1,4 @@
-name: Amazon Advanced Test Suite
+name: PlayStation 5 Search Test Suite
 
 on:
   push:
@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    name: Run Amazon Advanced Tests
+    name: Run PlayStation 5 Search Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     
@@ -48,15 +48,17 @@ jobs:
           echo "Installing Playwright browsers..."
           npx playwright install --with-deps chromium
       
-      - name: Run Amazon Advanced Tests
+      - name: Run PlayStation 5 Search Tests
         run: |
-          echo "════════════════════════════════════════"
-          echo "Starting Amazon Advanced Test Suite"
-          echo "════════════════════════════════════════"
-          npm run test:advanced -- --reporter=html --reporter=junit
-          echo "════════════════════════════════════════"
-          echo "Test execution completed"
-          echo "════════════════════════════════════════"
+          echo "════════════════════════════════════════════════════════════"
+          echo "Running PlayStation 5 Search Test Suite"
+          echo "Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS"
+          echo "Test 03: NAVIGATE TO PRODUCT & ADD TO CART"
+          echo "════════════════════════════════════════════════════════════"
+          npx playwright test amazon-advanced.test.js --grep "02\.|03\." --reporter=html --reporter=junit
+          echo "════════════════════════════════════════════════════════════"
+          echo "Test execution completed - Only PlayStation 5 Search Tests"
+          echo "════════════════════════════════════════════════════════════"
       
       - name: Upload Test Results
         if: always()
@@ -79,8 +81,8 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: test-results/junit.xml
-          check_name: Playwright Test Results
-          comment_title: 'Amazon Advanced Tests Results'
+          check_name: PlayStation 5 Search Test Results
+          comment_title: 'PlayStation 5 Search Tests Results'
       
       - name: Comment PR with Test Summary
         if: github.event_name == 'pull_request' && always()
@@ -90,7 +92,10 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            let summary = '## 🧪 Amazon Advanced Test Results\n\n';
+            let summary = '## 🎮 PlayStation 5 Search Test Results\n\n';
+            summary += '### Test Cases Running:\n';
+            summary += '- Test 02: SEARCH FOR PRODUCT & VERIFY RESULTS\n';
+            summary += '- Test 03: NAVIGATE TO PRODUCT & ADD TO CART\n\n';
             
             try {
               const junitPath = './test-results/junit.xml';
