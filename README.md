@@ -1,3 +1,46 @@
+# Amazon Playwright Test (Local-fixture mode)
+
+Quick commands
+
+- Run tests (local fixtures):
+
+```powershell
+npx jest src/tests/Amazon.test.js --runInBand
+```
+
+- Run tests and produce JUnit XML report:
+
+```powershell
+npm run test:report
+```
+
+Notes
+
+- The repo includes local HTML fixtures under `src/fixtures/` and a small `test-server.js` that serves them on `http://localhost:3000` during tests.
+- If you want to run tests against the real `amazon.com` site, you need internet access and Playwright browsers installed:
+
+```powershell
+npx playwright install
+```
+
+If you're behind a proxy, set env vars before installing:
+
+```powershell
+$env:HTTP_PROXY="http://user:pass@proxy:port"
+$env:HTTPS_PROXY="http://user:pass@proxy:port"
+npx playwright install
+```
+
+Troubleshooting
+
+- If Playwright fails to download browsers due to DNS/proxy, you can use an installed Chrome by setting `CHROME_PATH` env var before running tests.
+- The test file `src/tests/Amazon.test.js` defaults to using the local server; to switch to production remove the server start/stop and change URLs.
+
+Report files
+
+- JUnit XML will be written to `test-results/junit.xml` when using `npm run test:report`.
+
+If you want, I can (A) convert tests to `@playwright/test` for richer HTML reports, or (B) add `jest-junit` as a devDependency and run the report here.
 # Playwright JS Test for Amazon Product Search
 
 This project contains a test script written in Playwright JS that searches for a product on the Amazon website.

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="2.425">
+  <testsuite name="Amazon website" errors="0" failures="0" skipped="0" timestamp="2026-01-10T13:35:39" time="2.33" tests="1">
+    <testcase classname="Amazon website should be able to search for a product, add to cart, and proceed to checkout" name="Amazon website should be able to search for a product, add to cart, and proceed to checkout" time="1.369">
+    </testcase>
+  </testsuite>
+</testsuites>
