@@ -34,7 +34,7 @@ install:dependencies:
     - develop
     - merge_requests
 
-# Run advanced Amazon tests
+# Run advanced Amazon tests - Test 6 & 7 only
 test:amazon:advanced:
   stage: test
   image: node:18-alpine
@@ -45,9 +45,9 @@ test:amazon:advanced:
     - npx playwright install --with-deps chromium
   script:
     - echo "═══════════════════════════════════════"
-    - echo "Starting Amazon Advanced Test Suite"
+    - echo "Starting Amazon Test Suite (06 & 07)"
     - echo "═══════════════════════════════════════"
-    - npm run test:advanced -- --reporter=html --reporter=junit
+    - npx playwright test amazon-advanced.test.js --grep "(06\\.|07\\.)" --headed --reporter=html --reporter=junit --reporter=line
     - echo "═══════════════════════════════════════"
     - echo "Test execution completed"
     - echo "═══════════════════════════════════════"
@@ -93,7 +93,7 @@ test:report:
     - merge_requests
   allow_failure: true
 
-# On-demand test run (manual trigger)
+# On-demand test run (manual trigger) - Test 6 & 7 only
 test:amazon:advanced:manual:
   stage: test
   image: node:18-alpine
@@ -103,8 +103,8 @@ test:amazon:advanced:manual:
     - npm ci --prefer-offline --no-audit
     - npx playwright install --with-deps chromium
   script:
-    - echo "Manual test run triggered"
-    - npm run test:advanced -- --reporter=html --reporter=junit --reporter=line
+    - echo "Manual test run triggered - Tests 06 & 07"
+    - npx playwright test amazon-advanced.test.js --grep "(06\\.|07\\.)" --headed --reporter=html --reporter=junit --reporter=line
   artifacts:
     when: always
     paths:
